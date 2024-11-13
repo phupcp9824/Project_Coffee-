@@ -106,88 +106,88 @@ namespace DuAn1_Coffe.PRL.Forms
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //if (scanning && ptb_Image.Image != null)
-            //{
-            //    BarcodeReader reader = new BarcodeReader();
-            //    Bitmap bitmap = new Bitmap(ptb_Image.Image);
-            //    Result result = reader.Decode(bitmap);
-            //    if (result != null)
-            //    {
-            //        string decoded = result.Text.Trim();
-            //        MessageBox.Show("Mã sản phẩm:" + decoded);
-            //        // Tìm kiếm sản phẩm trong database
-            //        var sanPham = (from sp in SanPhamSer.Allsanpham()
-            //                       where string.Equals(sp.MaSp, decoded, StringComparison.OrdinalIgnoreCase)
-            //                       select new
-            //                       {
-            //                           Masp = sp.MaSp,
-            //                           TenSP = sp.TenSanPham,
-            //                           giaban = sp.DonGia,
-            //                           sl = sp.SoLuong,
-            //                           idsp = sp.Id
-            //                       }).FirstOrDefault();
-            //        if (sanPham != null)
-            //        {
-            //            string input = Microsoft.VisualBasic.Interaction.InputBox("Nhập số lượng:", "Nhập số lượng", "1");
-            //            if (string.IsNullOrEmpty(input))
-            //            {
-            //                return;
-            //            }
+            if (scanning && ptb_Image.Image != null)
+            {
+                BarcodeReader reader = new BarcodeReader();
+                Bitmap bitmap = new Bitmap(ptb_Image.Image);
+                Result result = reader.Decode(bitmap);
+                if (result != null)
+                {
+                    string decoded = result.Text.Trim();
+                    MessageBox.Show("Mã sản phẩm:" + decoded);
+                    // Tìm kiếm sản phẩm trong database
+                    var sanPham = (from sp in SanPhamSer.Allsanpham()
+                                   where string.Equals(sp.MaSp, decoded, StringComparison.OrdinalIgnoreCase)
+                                   select new
+                                   {
+                                       Masp = sp.MaSp,
+                                       TenSP = sp.TenSanPham,
+                                       giaban = sp.DonGia,
+                                       sl = sp.SoLuong,
+                                       idsp = sp.Id
+                                   }).FirstOrDefault();
+                    if (sanPham != null)
+                    {
+                        string input = Microsoft.VisualBasic.Interaction.InputBox("Nhập số lượng:", "Nhập số lượng", "1");
+                        if (string.IsNullOrEmpty(input))
+                        {
+                            return;
+                        }
 
-            //            int soLuong;
-            //            if (!int.TryParse(input, out soLuong) || soLuong <= 0)
-            //            {
-            //                MessageBox.Show("Số lượng không hợp lệ");
-            //                return;
-            //            }
+                        int soLuong;
+                        if (!int.TryParse(input, out soLuong) || soLuong <= 0)
+                        {
+                            MessageBox.Show("Số lượng không hợp lệ");
+                            return;
+                        }
 
-            //            int soluongkho = sanPham.sl;
-            //            if (soLuong > soluongkho)
-            //            {
-            //                MessageBox.Show("Số lượng không đủ trong kho");
-            //                return;
-            //            }
-            //            int IdSp = sanPham.idsp;
-            //            int tong = soluongkho - soLuong;
-            //            SanPham sanPham1 = new SanPham();
-            //            sanPham1.SoLuong = tong;
+                        int soluongkho = sanPham.sl;
+                        if (soLuong > soluongkho)
+                        {
+                            MessageBox.Show("Số lượng không đủ trong kho");
+                            return;
+                        }
+                        int IdSp = sanPham.idsp;
+                        int tong = soluongkho - soLuong;
+                        SanPham sanPham1 = new SanPham();
+                        sanPham1.SoLuong = tong;
 
-            //            // Cập nhật số lượng mới cho sản phẩm
-            //            var success = SanPhamSer.UpdateSP(IdSp, sanPham1);
-            //            if (success != null)
-            //            {
-            //                // Nếu cập nhật thành công, cập nhật giá trị mới của số lượng
-            //                soluongkho = tong;
-            //            }
+                        // Cập nhật số lượng mới cho sản phẩm
+                        var success = SanPhamSer.UpdateSP(IdSp, sanPham1);
+                        if (success != null)
+                        {
+                            // Nếu cập nhật thành công, cập nhật giá trị mới của số lượng
+                            soluongkho = tong;
+                        }
 
-            //            HoaDonChiTiet hdct = new HoaDonChiTiet();
-            //            hdct.MaHoaDon = GenerateHoaDonCtId();
-            //            hdct.TenSanPham = sanPham.TenSP;
-            //            hdct.SoLuong = soLuong;
-            //            hdct.Gia = sanPham.giaban;
-            //            hdct.ThanhTien = hdct.Gia * hdct.SoLuong;
-            //            hdct.IdHoaDon = int.Parse(txtidmax.Text);
-            //            hdct.IdSanPham = sanPham.idsp;
+                        HoaDonChiTiet hdct = new HoaDonChiTiet();
+                        hdct.MaHoaDon = GenerateHoaDonCtId();
+                        hdct.TenSanPham = sanPham.TenSP;
+                        hdct.SoLuong = soLuong;
+                        hdct.Gia = sanPham.giaban;
+                        hdct.ThanhTien = hdct.Gia * hdct.SoLuong;
+                        hdct.IdHoaDon = int.Parse(txtidmax.Text);
+                        hdct.IdSanPham = sanPham.idsp;
 
-            //            HoaDonChiTietSer.Update(hdct);
+                        HoaDonChiTietSer.Update(hdct);
 
-            //            // Kiểm tra xem Idhoadon có bằng với txtidmax.Text hay không
-            //            int selectedHoaDonId = Convert.ToInt32(txtidmax.Text);
-            //            if (selectedHoaDonId == int.Parse(txtidmax.Text))
-            //            {
-            //                LoadHDCT(selectedHoaDonId);
-            //            }
-            //            LoadSanPham();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Sản phẩm không tồn tại");
-            //        }
+                        // Kiểm tra xem Idhoadon có bằng với txtidmax.Text hay không
+                        int selectedHoaDonId = Convert.ToInt32(txtidmax.Text);
+                        if (selectedHoaDonId == int.Parse(txtidmax.Text))
+                        {
+                            LoadHDCT(selectedHoaDonId);
+                        }
+                        LoadSanPham();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Sản phẩm không tồn tại");
+                    }
 
-            //        timer1.Stop();
-            //        scanning = false; // Đặt biến scanning về false để ngăn quét tiếp
-            //    }
-            //}
+                    timer1.Stop();
+                    scanning = false; // Đặt biến scanning về false để ngăn quét tiếp
+                }
+            }
         }
         public string GenerateHoaDonCtId()
         {
