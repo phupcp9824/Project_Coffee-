@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZXing;
 
+
 //using static ClosedXML.Excel.XLPredefinedFormat;
 
 namespace DuAn1_Coffe.PRL.Forms
@@ -115,7 +116,7 @@ namespace DuAn1_Coffe.PRL.Forms
                 {
                     string decoded = result.Text.Trim();
                     MessageBox.Show("Mã sản phẩm:" + decoded);
-                    // Tìm kiếm sản phẩm trong database
+                    //Tìm kiếm sản phẩm trong database
                     var sanPham = (from sp in SanPhamSer.Allsanpham()
                                    where string.Equals(sp.MaSp, decoded, StringComparison.OrdinalIgnoreCase)
                                    select new
@@ -152,11 +153,11 @@ namespace DuAn1_Coffe.PRL.Forms
                         SanPham sanPham1 = new SanPham();
                         sanPham1.SoLuong = tong;
 
-                        // Cập nhật số lượng mới cho sản phẩm
+                        //Cập nhật số lượng mới cho sản phẩm
                         var success = SanPhamSer.UpdateSP(IdSp, sanPham1);
                         if (success != null)
                         {
-                            // Nếu cập nhật thành công, cập nhật giá trị mới của số lượng
+                            //Nếu cập nhật thành công, cập nhật giá trị mới của số lượng
                             soluongkho = tong;
                         }
 
@@ -171,7 +172,7 @@ namespace DuAn1_Coffe.PRL.Forms
 
                         HoaDonChiTietSer.Update(hdct);
 
-                        // Kiểm tra xem Idhoadon có bằng với txtidmax.Text hay không
+                        //Kiểm tra xem Idhoadon có bằng với txtidmax.Text hay không
                         int selectedHoaDonId = Convert.ToInt32(txtidmax.Text);
                         if (selectedHoaDonId == int.Parse(txtidmax.Text))
                         {
