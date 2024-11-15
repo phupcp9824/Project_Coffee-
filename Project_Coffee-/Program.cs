@@ -1,3 +1,4 @@
+using DuAn1_Coffe;
 using DuAn1_Coffe.PRL.Forms;
 
 namespace Project_Coffee_
@@ -13,7 +14,7 @@ namespace Project_Coffee_
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form_TrangChu());
+            Application.Run(new Form1());
         }
     }
 }
